@@ -2,6 +2,10 @@ import Image from "next/image";
 import Section from "@/components/section";
 import Reveal from "@/components/reveal";
 import SubscribeForm from "@/components/subscribe-form";
+import TextReveal from "@/components/text-reveal";
+import Noise from "@/components/noise";
+import Counter from "@/components/counter";
+import { StaggerContainer, StaggerItem } from "@/components/stagger-children";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -28,6 +32,15 @@ const values = [
   },
 ];
 
+const glanceStats = [
+  { label: "Founded", value: "January 2024" },
+  { label: "Subscribers", value: "12,000+", num: 12000, suffix: "+" },
+  { label: "Issues Published", value: "150+", num: 150, suffix: "+" },
+  { label: "Avg. Open Rate", value: "52%", num: 52, suffix: "%" },
+  { label: "Countries", value: "40+", num: 40, suffix: "+" },
+  { label: "Reader Satisfaction", value: "4.9 / 5.0" },
+];
+
 export default function AboutPage() {
   return (
     <>
@@ -46,13 +59,13 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-white/88" />
         </div>
 
-        <Reveal>
-          <h1 className="relative z-10 mx-auto max-w-4xl text-center font-heading text-[clamp(2rem,5vw,3.8rem)] font-bold italic leading-[1.2] tracking-tight text-text-primary">
-            &ldquo;We believe marketers deserve better than guesswork. They
-            deserve tools that think, insights that compound, and a community
-            that pushes them forward.&rdquo;
-          </h1>
-        </Reveal>
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
+          <TextReveal
+            text={`\u201CWe believe marketers deserve better than guesswork. They deserve tools that think, insights that compound, and a community that pushes them forward.\u201D`}
+            as="h1"
+            className="font-heading text-[clamp(2rem,5vw,3.8rem)] font-bold italic leading-[1.2] tracking-tight text-text-primary"
+          />
+        </div>
       </section>
 
       {/* ======== ORIGIN STORY ======== */}
@@ -94,20 +107,13 @@ export default function AboutPage() {
             </Reveal>
           </div>
 
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} variant="fade-right">
             <div className="rounded-2xl border border-border bg-bg-primary p-8 md:mt-10 md:p-10">
               <h3 className="mb-6 font-heading text-xs font-semibold uppercase tracking-widest text-text-muted">
                 At a Glance
               </h3>
               <div className="space-y-6">
-                {[
-                  { label: "Founded", value: "January 2024" },
-                  { label: "Subscribers", value: "12,000+" },
-                  { label: "Issues Published", value: "150+" },
-                  { label: "Avg. Open Rate", value: "52%" },
-                  { label: "Countries", value: "40+" },
-                  { label: "Reader Satisfaction", value: "4.9 / 5.0" },
-                ].map((item) => (
+                {glanceStats.map((item) => (
                   <div
                     key={item.label}
                     className="flex items-baseline justify-between border-b border-border-subtle pb-3 last:border-0 last:pb-0"
@@ -116,7 +122,11 @@ export default function AboutPage() {
                       {item.label}
                     </span>
                     <span className="font-heading text-lg font-bold text-text-primary">
-                      {item.value}
+                      {item.num != null ? (
+                        <Counter target={item.num} suffix={item.suffix} />
+                      ) : (
+                        item.value
+                      )}
                     </span>
                   </div>
                 ))}
@@ -137,9 +147,9 @@ export default function AboutPage() {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-12">
-          {values.map((v, i) => (
-            <Reveal key={v.num} delay={i * 0.08}>
+        <StaggerContainer className="mt-14 grid gap-10 md:grid-cols-3 md:gap-12" stagger={0.12}>
+          {values.map((v) => (
+            <StaggerItem key={v.num}>
               <div className="group">
                 <span className="font-heading text-6xl font-800 text-border transition-colors duration-500 group-hover:text-text-primary">
                   {v.num}
@@ -151,20 +161,20 @@ export default function AboutPage() {
                   {v.desc}
                 </p>
               </div>
-            </Reveal>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Section>
 
       {/* ======== CREATOR SPOTLIGHT ======== */}
       <Section className="border-t border-border bg-bg-secondary">
         <div className="mx-auto max-w-xl text-center">
-          <Reveal>
+          <Reveal variant="blur">
             <span className="font-heading text-[11px] font-semibold uppercase tracking-widest text-text-muted">
               Behind the Newsletter
             </span>
           </Reveal>
-          <Reveal delay={0.06}>
+          <Reveal delay={0.06} variant="scale">
             <div className="relative mx-auto mt-8 h-24 w-24 overflow-hidden rounded-full border-2 border-border">
               <Image
                 src="/images/creator-portrait.jpg"
@@ -181,7 +191,7 @@ export default function AboutPage() {
             </h3>
             <p className="mt-1 text-sm text-text-muted">Founder & Editor</p>
           </Reveal>
-          <Reveal delay={0.14}>
+          <Reveal delay={0.14} variant="blur">
             <p className="mt-6 text-base leading-relaxed text-text-secondary">
               Elena spent 12 years leading AI strategy at a Fortune 500 ad
               agency before starting AI Marketing. She&apos;s managed over $50M
@@ -194,19 +204,20 @@ export default function AboutPage() {
       </Section>
 
       {/* ======== CTA ======== */}
-      <section className="bg-bg-inverse px-6 py-24 text-center md:py-32">
-        <div className="mx-auto max-w-xl">
-          <Reveal>
-            <h2 className="font-heading text-3xl font-bold tracking-tight text-text-inverse md:text-4xl">
-              Join the community.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.08}>
+      <section className="relative bg-bg-inverse px-6 py-24 text-center md:py-32">
+        <Noise />
+        <div className="relative z-10 mx-auto max-w-xl">
+          <TextReveal
+            text="Join the community."
+            as="h2"
+            className="font-heading text-3xl font-bold tracking-tight text-text-inverse md:text-4xl"
+          />
+          <Reveal delay={0.2} variant="blur">
             <p className="mt-4 text-base text-text-muted">
               12,000+ marketers. Weekly insights. Zero spam.
             </p>
           </Reveal>
-          <Reveal delay={0.14}>
+          <Reveal delay={0.3}>
             <div className="mx-auto mt-8 max-w-md">
               <SubscribeForm variant="inverted" />
             </div>

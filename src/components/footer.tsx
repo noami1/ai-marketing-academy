@@ -3,14 +3,15 @@ import SubscribeForm from "./subscribe-form";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/resources", label: "Resources" },
   { href: "/contact", label: "Contact" },
 ];
 
 const resourceLinks = [
   { href: "/blog", label: "All Articles" },
-  { href: "/blog", label: "AI Tools" },
+  { href: "/resources", label: "AI Tools Directory" },
   { href: "/blog", label: "Case Studies" },
   { href: "/blog", label: "Tutorials" },
 ];

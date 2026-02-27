@@ -3,12 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Magnetic from "@/components/magnetic";
 
 const links = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
+  { href: "/resources", label: "Resources" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -48,33 +51,47 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <ul className="hidden items-center gap-8 md:flex">
-          {links.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className={cn(
-                  "relative font-body text-sm transition-colors hover:text-text-primary",
-                  pathname === link.href
-                    ? "text-text-primary"
-                    : "text-text-tertiary"
-                )}
-              >
-                {link.label}
-                {pathname === link.href && (
-                  <span className="absolute -bottom-1 left-0 h-[1.5px] w-full bg-text-primary" />
-                )}
-              </Link>
-            </li>
-          ))}
+          {links.map((link) => {
+            const isActive =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(link.href);
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className={cn(
+                    "relative font-body text-sm transition-colors hover:text-text-primary",
+                    isActive ? "text-text-primary" : "text-text-tertiary"
+                  )}
+                >
+                  {link.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute -bottom-1 left-0 h-[1.5px] w-full bg-text-primary"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         {/* CTA */}
-        <Link
-          href="/blog"
-          className="hidden rounded-full bg-accent px-5 py-2.5 font-heading text-xs font-semibold text-text-inverse transition-colors hover:bg-accent-hover md:inline-flex"
-        >
-          Subscribe
-        </Link>
+        <Magnetic strength={0.15}>
+          <Link
+            href="/blog"
+            className="hidden rounded-full bg-accent px-5 py-2.5 font-heading text-xs font-semibold text-text-inverse transition-all hover:bg-accent-hover active:scale-95 md:inline-flex"
+          >
+            Subscribe
+          </Link>
+        </Magnetic>
 
         {/* Mobile toggle */}
         <button
@@ -104,29 +121,46 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      <div
-        className={cn(
-          "overflow-hidden transition-all duration-400 md:hidden",
-          mobileOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden md:hidden"
+          >
+            <div className="mx-auto flex max-w-6xl flex-col gap-1 px-6 pb-6 pt-4">
+              {links.map((link, i) => {
+                const isActive =
+                  link.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(link.href);
+                return (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "block rounded-xl px-4 py-3 text-sm transition-colors",
+                        isActive
+                          ? "bg-bg-tertiary font-medium text-text-primary"
+                          : "text-text-secondary hover:bg-bg-secondary"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
         )}
-      >
-        <div className="mx-auto flex max-w-6xl flex-col gap-1 px-6 pb-6 pt-4">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "rounded-xl px-4 py-3 text-sm transition-colors",
-                pathname === link.href
-                  ? "bg-bg-tertiary font-medium text-text-primary"
-                  : "text-text-secondary hover:bg-bg-secondary"
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-      </div>
+      </AnimatePresence>
     </nav>
   );
 }

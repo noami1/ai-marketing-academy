@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { cn, formatDate } from "@/lib/utils";
 import type { Post } from "@/data/posts";
 
@@ -21,7 +24,7 @@ export default function PostCard({
         className
       )}
     >
-      {/* Cover image */}
+      {/* Cover image with Ken Burns effect */}
       {post.coverImage && (
         <div
           className={cn(
@@ -33,9 +36,15 @@ export default function PostCard({
             src={post.coverImage}
             alt={post.title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes={featured ? "(max-width: 768px) 100vw, 60vw" : "(max-width: 768px) 100vw, 33vw"}
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            sizes={
+              featured
+                ? "(max-width: 768px) 100vw, 60vw"
+                : "(max-width: 768px) 100vw, 33vw"
+            }
           />
+          {/* Subtle gradient overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         </div>
       )}
 
@@ -71,9 +80,13 @@ export default function PostCard({
 
         <div className="mt-5 flex items-center gap-2 font-heading text-sm font-medium text-text-primary">
           Read article
-          <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+          <motion.span
+            className="inline-block"
+            whileHover={{ x: 4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
             →
-          </span>
+          </motion.span>
         </div>
       </div>
     </Link>

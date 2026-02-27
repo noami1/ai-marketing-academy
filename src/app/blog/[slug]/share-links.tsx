@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "sonner";
+
 export default function ShareLinks({
   title,
   slug,
@@ -17,13 +19,7 @@ export default function ShareLinks({
 
   function copyLink() {
     navigator.clipboard.writeText(url);
-    const btn = document.getElementById("copy-btn");
-    if (btn) {
-      btn.textContent = "Copied!";
-      setTimeout(() => {
-        btn.textContent = "Copy link";
-      }, 2000);
-    }
+    toast.success("Link copied to clipboard!");
   }
 
   return (
@@ -36,7 +32,7 @@ export default function ShareLinks({
           href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium text-text-secondary transition-colors hover:border-border-strong hover:text-text-primary"
+          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium text-text-secondary transition-all hover:border-border-strong hover:text-text-primary active:scale-95"
         >
           Twitter / X
         </a>
@@ -44,14 +40,13 @@ export default function ShareLinks({
           href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium text-text-secondary transition-colors hover:border-border-strong hover:text-text-primary"
+          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium text-text-secondary transition-all hover:border-border-strong hover:text-text-primary active:scale-95"
         >
           LinkedIn
         </a>
         <button
-          id="copy-btn"
           onClick={copyLink}
-          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium text-text-secondary transition-colors hover:border-border-strong hover:text-text-primary"
+          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium text-text-secondary transition-all hover:border-border-strong hover:text-text-primary active:scale-95"
         >
           Copy link
         </button>

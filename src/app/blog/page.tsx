@@ -1,6 +1,8 @@
 import Section from "@/components/section";
 import Reveal from "@/components/reveal";
 import PostCard from "@/components/post-card";
+import TextReveal from "@/components/text-reveal";
+import { StaggerContainer, StaggerItem } from "@/components/stagger-children";
 import { posts, getFeaturedPosts } from "@/data/posts";
 import BlogSearch from "./blog-search";
 import type { Metadata } from "next";
@@ -18,13 +20,18 @@ export default function BlogPage() {
   return (
     <Section>
       {/* ======== HEADER ======== */}
-      <Reveal>
+      <Reveal variant="blur">
         <span className="font-heading text-[11px] font-semibold uppercase tracking-widest text-text-muted">
           Blog
         </span>
-        <h1 className="mt-2 font-heading text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
-          The Journal
-        </h1>
+      </Reveal>
+      <TextReveal
+        text="The Journal"
+        as="h1"
+        className="mt-2 font-heading text-4xl font-bold tracking-tight text-text-primary md:text-5xl"
+        delay={0.1}
+      />
+      <Reveal delay={0.15} variant="blur">
         <p className="mt-3 max-w-lg text-base text-text-secondary">
           Insights, strategies, and case studies on AI-powered marketing.
           Updated weekly.
@@ -39,20 +46,20 @@ export default function BlogPage() {
       {/* ======== FEATURED POST ======== */}
       {featured && (
         <div className="relative z-0 mt-12">
-          <Reveal>
+          <Reveal variant="scale">
             <PostCard post={featured} featured className="bg-bg-secondary" />
           </Reveal>
         </div>
       )}
 
       {/* ======== POST GRID ======== */}
-      <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {remaining.map((post, i) => (
-          <Reveal key={post.slug} delay={i * 0.06}>
+      <StaggerContainer className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3" stagger={0.08}>
+        {remaining.map((post) => (
+          <StaggerItem key={post.slug}>
             <PostCard post={post} />
-          </Reveal>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
     </Section>
   );
 }
