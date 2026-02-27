@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import SubscribeForm from "./subscribe-form";
 
 const navLinks = [
@@ -26,11 +27,15 @@ export default function Footer() {
           <div className="md:col-span-5">
             <Link
               href="/"
-              className="font-heading text-[15px] font-bold tracking-tight text-text-primary"
+              className="flex items-center gap-2.5 font-heading text-[15px] font-bold tracking-tight text-text-primary"
             >
-              <span className="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-xs font-extrabold text-text-inverse">
-                AI
-              </span>
+              <Image
+                src="/images/logo.png"
+                alt="AI Marketing"
+                width={32}
+                height={32}
+                className="h-8 w-8 object-contain"
+              />
               AI Marketing
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-text-tertiary">

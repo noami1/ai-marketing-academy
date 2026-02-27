@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -42,11 +43,15 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="font-heading text-[15px] font-bold tracking-tight text-text-primary"
+          className="flex items-center gap-2.5 font-heading text-[15px] font-bold tracking-tight text-text-primary"
         >
-          <span className="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-xs font-extrabold text-text-inverse">
-            AI
-          </span>
+          <Image
+            src="/images/logo.png"
+            alt="AI Marketing"
+            width={32}
+            height={32}
+            className="h-8 w-8 object-contain"
+          />
           AI Marketing
         </Link>
 
