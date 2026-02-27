@@ -445,6 +445,7 @@ export default function Home() {
             <AvatarStack
               className="mt-6 justify-center"
               label="marketers already subscribed"
+              inverted
             />
           </Reveal>
         </div>

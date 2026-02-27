@@ -15,10 +15,12 @@ const avatars = [
 export default function AvatarStack({
   count = "12,000+",
   label = "marketers already subscribed",
+  inverted = false,
   className,
 }: {
   count?: string;
   label?: string;
+  inverted?: boolean;
   className?: string;
 }) {
   return (
@@ -35,7 +37,10 @@ export default function AvatarStack({
               stiffness: 300,
               damping: 20,
             }}
-            className="h-8 w-8 overflow-hidden rounded-full border-2 border-bg-primary"
+            className={cn(
+              "h-8 w-8 overflow-hidden rounded-full border-2",
+              inverted ? "border-bg-inverse" : "border-bg-primary"
+            )}
             style={{ zIndex: avatars.length - i }}
           >
             <Image
@@ -49,7 +54,7 @@ export default function AvatarStack({
         ))}
       </div>
       <div className="text-sm">
-        <span className="font-heading font-semibold text-text-primary">
+        <span className={cn("font-heading font-semibold", inverted ? "text-text-inverse" : "text-text-primary")}>
           {count}
         </span>{" "}
         <span className="text-text-muted">{label}</span>
