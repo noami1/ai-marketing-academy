@@ -12,7 +12,7 @@ const navLinks = [
 const resourceLinks = [
   { href: "/blog", label: "All Articles" },
   { href: "/resources", label: "AI Tools Directory" },
-  { href: "/blog", label: "Case Studies" },
+  { href: "/archive", label: "Newsletter Archive" },
   { href: "/blog", label: "Tutorials" },
 ];
 

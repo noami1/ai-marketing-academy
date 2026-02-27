@@ -214,3 +214,50 @@ textarea.input-underline {
   animation: skeleton-shimmer 1.8s ease-in-out infinite;
   border-radius: 8px;
 }
+
+/* ==================== HERO GRADIENT ==================== */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(245, 245, 245, 0.8) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 50%, rgba(229, 229, 229, 0.3) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 60%, rgba(229, 229, 229, 0.2) 0%, transparent 60%),
+    var(--color-bg-primary);
+}
+
+/* ==================== RANGE SLIDER ==================== */
+.slider-input {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  outline: none;
+  cursor: pointer;
+}
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 3px solid var(--color-bg-primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.slider-input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+.slider-input::-webkit-slider-thumb:active {
+  transform: scale(0.95);
+}
+.slider-input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 3px solid var(--color-bg-primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
