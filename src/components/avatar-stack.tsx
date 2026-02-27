@@ -1,14 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const avatars = [
-  { initials: "SR", bg: "#e8d5f5" },
-  { initials: "MK", bg: "#d5e8f5" },
-  { initials: "AL", bg: "#f5e0d5" },
-  { initials: "DC", bg: "#d5f5e0" },
-  { initials: "PM", bg: "#f5d5d5" },
+  { src: "/images/avatar-1.jpg", alt: "Sarah" },
+  { src: "/images/avatar-2.jpg", alt: "Marcus" },
+  { src: "/images/avatar-3.jpg", alt: "Amara" },
+  { src: "/images/avatar-4.jpg", alt: "David" },
+  { src: "/images/avatar-5.jpg", alt: "Priya" },
 ];
 
 export default function AvatarStack({
@@ -25,7 +26,7 @@ export default function AvatarStack({
       <div className="flex -space-x-2.5">
         {avatars.map((a, i) => (
           <motion.div
-            key={a.initials}
+            key={a.alt}
             initial={{ opacity: 0, scale: 0.5, x: -8 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{
@@ -34,10 +35,16 @@ export default function AvatarStack({
               stiffness: 300,
               damping: 20,
             }}
-            className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-bg-primary font-heading text-[9px] font-bold text-text-primary"
-            style={{ background: a.bg, zIndex: avatars.length - i }}
+            className="h-8 w-8 overflow-hidden rounded-full border-2 border-bg-primary"
+            style={{ zIndex: avatars.length - i }}
           >
-            {a.initials}
+            <Image
+              src={a.src}
+              alt={a.alt}
+              width={32}
+              height={32}
+              className="h-full w-full object-cover"
+            />
           </motion.div>
         ))}
       </div>
