@@ -36,7 +36,10 @@ export default function Navbar() {
     <nav
       className={cn(
         "fixed left-0 right-0 top-0 z-50 transition-all duration-400",
-        scrolled ? "nav-scrolled py-4" : "py-5"
+        scrolled || mobileOpen
+          ? "bg-bg-primary/95 py-4 backdrop-blur-xl"
+          : "py-5",
+        scrolled && "nav-scrolled"
       )}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6">
@@ -134,7 +137,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden md:hidden"
+            className="overflow-hidden border-t border-border-subtle md:hidden"
           >
             <div className="mx-auto flex max-w-6xl flex-col gap-1 px-6 pb-6 pt-4">
               {links.map((link, i) => {
